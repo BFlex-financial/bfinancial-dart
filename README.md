@@ -39,7 +39,7 @@ void main() {
   final (response, err) = await payments.create(CardCreate(
     expirationMonth: 11,
     expirationYear:  2025,
-    payerEmail:     'lucasdwbfff@gmail.com',
+    payerEmail:     'test@gmail.com',
     PayerName:      'test user',
     payerCpf:       '1245678910',
     number:         '5031433215406351',
