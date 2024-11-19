@@ -15,8 +15,8 @@ void main() {
 
   final (response, err) = await payments.create(PixCreate(
     payerEmail: 'test@gmail.com',
-    payerCpf: '12345678909',
-    amount: 1000.0,
+    payerCpf:   '12345678909',
+    amount:      1000.00,
   ));
 
   if( err != null ) {
@@ -41,9 +41,9 @@ void main() {
     expirationYear:  2025,
     payerEmail:     'test@gmail.com',
     PayerName:      'test user',
-    payerCpf:       '1245678910',
+    payerCpf:       '12345678909',
     number:         '5031433215406351',
-    amount:          1000.0,
+    amount:          1000.00,
     cvv:            '123'
   ));
 
