@@ -1,4 +1,5 @@
 # bfinancial-dart
+🎯 Library to assist with large and small scale payments
 
 <div align="center">
   <h1>Exemplos de código</h1>
