@@ -39,7 +39,7 @@ dependencies:
   bfinancial: ^0.0.1
 ```
 
-Luego, use el **[🎯 Dart](https://dart.dev/) SDK ** para descargar la biblioteca. Esto se puede hacer con el comando:
+Luego, use el **[🎯 Dart](https://dart.dev/) SDK** para descargar la biblioteca. Esto se puede hacer con el comando:
 
 ```sh-session
 $ dart pub get
