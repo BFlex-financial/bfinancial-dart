@@ -15,5 +15,5 @@
     <a href="./DOCS-EN.md">English</a> | 
     <a href="./DOCS-ES.md">Español</a>
   </h4>
-  Select the one you prefer?
+  Selection of the language with the most content for the documentation
 </div>

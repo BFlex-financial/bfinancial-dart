@@ -51,7 +51,8 @@ sealed class Response {
 
     return InvalidResp();
   }
-// # Access the payment
+  
+  /// # Access the payment
   ///
   /// If you have created a payment, and you know exactly
   /// what type it is and you are sure that it does not

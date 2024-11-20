@@ -7,16 +7,16 @@
 > ¿Necesita ayuda con algo del SDK? Puedes intentar interactuar en [nuestra comunidad de Discord](https://discord.gg/cdEnEtwehC)
 
 Resumen
-==================================================== =======
+=====================================
 
-<!--Tabla de índices-->
-* [Características](#características)
-* [Instalación](#instalación)
-  * [Requisitos](#requisitos)
-* [Empecemos](#comencemos)
-* [Ejemplos de código](#ejemplos)
+  <!--Tabla de índices-->
+  * [Características](#características)
+  * [Instalación](#instalación)
+    * [Requisitos](#requisitos)
+  * [Empecemos](#comencemos)
+  * [Ejemplos de código](#ejemplos)
 
-##Características
+## Características
 
 **Facilidad de implementación del SDK**: todos nuestros SDK están diseñados para mantener una estructura consistente de identificadores y patrones de uso en diferentes lenguajes de programación. Esto proporciona una integración extremadamente intuitiva: incluso si no tienes un conocimiento profundo del lenguaje específico, podrás implementar el SDK con facilidad.
 

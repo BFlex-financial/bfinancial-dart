@@ -9,12 +9,12 @@
 Summary
 ==========================================
 
-<!--Table of indexes-->
-* [Features](#features)
-* [Installation](#installation)
-  * [Requirements](#requirements)
-* [ Let's get started](#let's-get-started)
-* [Code Examples](#examples)
+  <!--Table of indexes-->
+  * [Features](#features)
+  * [Installation](#installation)
+    * [Requirements](#requirements)
+  * [ Let's get started](#let's-get-started)
+  * [Code Examples](#examples)
 
 ## Features
 
