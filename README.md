@@ -1,59 +1,20 @@
-# bfinancial-dart
+<img align="right" src="https://imgur.com/EtCvGVc.png" height="85">
+
 🎯 Library to assist with large and small scale payments
-#
+
+# 🌐 Global table of contents
+- [Documentation](./docs/README.md)
+- [Instalation](./docs/install.md)
+  - [Requirements](./docs/requirements.md)
+  - [Account](https://bflex.tech/help-account)
+- [Exemples](#examples)
+
 <br>
 <div align="center">
-  <h1>Exemplos de código</h1>
+  <h4>
+    <a href="./EXAMPLES-PT.md">Português</a> | 
+    <a href="./EXAMPLES-EN.md">English</a> | 
+    <a href="./EXAMPLES-ES.md">Español</a>
+  </h4>
+  Select the one you prefer?
 </div>
-
-
-### Pix
-```dart
-import 'package:bfinancial';
-
-void main() {
-  final client = Client.login("admin");
-  final payments = client.payments;
-
-  final (response, err) = await payments.create(PixCreate(
-    payerEmail: 'test@gmail.com',
-    payerCpf:   '12345678909',
-    amount:      1000.00,
-  ));
-
-  if( err != null ) {
-    print("Error returned when generating payment: $err");
-    return;
-  }
-
-  print(response.access<Pix>());
-}
-```
-
-### Cartão
-```dart
-import 'package:bfinancial';
-
-void main() {
-  final client = Client.login("admin");
-  final payments = client.payments;
-
-  final (response, err) = await payments.create(CardCreate(
-    expirationMonth: 11,
-    expirationYear:  2025,
-    payerEmail:     'test@gmail.com',
-    PayerName:      'test user',
-    payerCpf:       '12345678909',
-    number:         '5031433215406351',
-    amount:          1000.00,
-    cvv:            '123'
-  ));
-
-  if( err != null ) {
-    print("Error returned when generating payment: $err");
-    return;
-  }
-
-  print(response.access<Card>());
-}
-```
