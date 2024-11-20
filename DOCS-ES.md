@@ -3,7 +3,8 @@
 
 # SDK de dardos BFlex
 
-> [!TIP] > ¿Necesita ayuda con algo del SDK? Puedes intentar interactuar en [nuestra comunidad de Discord](https://discord.gg/cdEnEtwehC)
+> [!TIP] 
+> ¿Necesita ayuda con algo del SDK? Puedes intentar interactuar en [nuestra comunidad de Discord](https://discord.gg/cdEnEtwehC)
 
 Resumen
 ==================================================== =======

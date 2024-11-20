@@ -3,7 +3,8 @@
 
 # BFlex Dart SDK 
 
-> [!TIP] > Needs support with something from the SDK? You can try interacting in [our Discord community](https://discord.gg/cdEnEtwehC)
+> [!TIP] 
+> Needs support with something from the SDK? You can try interacting in [our Discord community](https://discord.gg/cdEnEtwehC)
 
 Summary
 ==========================================
