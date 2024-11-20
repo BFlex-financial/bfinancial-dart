@@ -2,12 +2,8 @@
 
 🎯 Library to assist with large and small scale payments
 
-## 🌐 Global table of contents
-- [Documentation](./docs/README.md)
-- [Instalation](./docs/install.md)
-  - [Requirements](./docs/requirements.md)
-  - [Account](https://bflex.tech/help-account)
-- [Exemples](#examples)
+# BFlex Dart SDK
+
 
 <br>
 <div align="center">
