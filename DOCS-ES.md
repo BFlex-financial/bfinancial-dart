@@ -11,7 +11,7 @@ Resumen
 
 <!--Tabla de índices-->
 * [Características](#características)
-  * [Instalación](#instalación)
+* [Instalación](#instalación)
   * [Requisitos](#requisitos)
 * [Empecemos](#comencemos)
 * [Ejemplos de código](#ejemplos)
