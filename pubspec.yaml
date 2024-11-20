@@ -1,6 +1,6 @@
 name: bfinancial
 description: Library to assist with large and small scale payments
-version: 1.0.0
+version: 0.0.1
 repository: https://github.com/BFlex-Financial/bfinancial-dart
 
 environment:
