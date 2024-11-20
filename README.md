@@ -2,7 +2,7 @@
 
 🎯 Library to assist with large and small scale payments
 
-# 🌐 Global table of contents
+## 🌐 Global table of contents
 - [Documentation](./docs/README.md)
 - [Instalation](./docs/install.md)
   - [Requirements](./docs/requirements.md)
