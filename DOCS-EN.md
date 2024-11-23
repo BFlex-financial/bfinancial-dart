@@ -202,3 +202,30 @@ void main() {
   }
 
 }
+```
+
+### Real-time Status Validation
+
+With this, you can wait to receive a Status, and know if it was received, or another one.
+
+```dart
+import 'package:bfinancial';
+
+void main() {
+  final client = Client.login("YOUR_API_KEY");
+  final payments = client.payments;
+
+  final (approved, status) = await response.access<Pix>().check((client, "approved"));
+  
+  if( approved ) {
+    print("Payment approved");
+  } else {
+    switch(status) {
+      case 'cancelled':
+        print("Payment cancelled");
+        break;
+      // ...
+    }
+  }
+}
+```

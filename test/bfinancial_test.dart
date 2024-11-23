@@ -10,16 +10,25 @@ void main() {
       var (response, err) = await payments.create(PixCreate(
         payerEmail: 'lucasdwbfff@gmail.com',
         payerCpf: '1245678910',
-        amount: 1000.0,
+        amount: .01,
       ));
 
       expect(err, null);
 
+      print(response.access<Pix>().literal);
+
+      final (approved, status) = await response.access<Pix>().check((client, "approved"));
+      if( approved ) {
+        print("Pagamento aprovado");
+      }
+
       String paymentId = response.access<Pix>().paymentId;
       (response, err) = await payments.obtain(paymentId);
+      print(response);
 
       expect(err, null);
-      print(response);
+
+      
     });
   });
 }

@@ -1,4 +1,5 @@
 import 'package:bfinancial/bfinancial.dart';
+import 'dart:io';
 
 enum StatusType {
   reject,
@@ -31,7 +32,7 @@ class Status {
       case 'REFUNDED' : return Status(StatusType.refunded);
       case 'PENDING'  : return Status(StatusType.pending);
     }
-    
+
     return Status(StatusType.unknown);
   }
 }
@@ -148,6 +149,44 @@ sealed class Response {
     return this as T;
   }
 
+   /// # Check payment status
+  /// 
+  /// - This function checks the payment status in real time.
+  /// 
+  /// The system waits for any update on the payment status.
+  /// If the status changes from X to Y, an update will be reported. 
+  /// If the status is as expected, the system will return true in $1. 
+  /// If the status is different from what is expected will return false in $1 and, 
+  /// the status will be returned in $2.
+  /// 
+  /// # Exemple
+  /// 
+  /// ```dart
+  /// // Create the payment
+  /// final (response, err) = await payments.create(PixCreate( ... ));
+  /// 
+  /// // Ensures that there are no errors when creating the payment
+  /// if( err != null ) {
+  ///   print("Error returned when generating payment: $err");
+  /// }
+  /// 
+  /// final (approved, status) = await response.access<Pix>().check((client, "approved"));
+  ///
+  /// if( approved ) {
+  ///   print("Payment approved");
+  /// } else {
+  ///   switch(status) {
+  ///     case 'cancelled':
+  ///       print("Payment cancelled");
+  ///       break;
+  ///     // ...
+  ///   }
+  /// }
+  /// ```
+  Future<(bool, String?)> check((Client, String) info) async {
+    return (false, null);
+  }
+
 }
 
 class Card implements Response {
@@ -182,6 +221,31 @@ class Card implements Response {
 
   @override
   Card access<Card>() => this as Card;
+
+  @override
+  Future<(bool, String?)> check((Client, String) info) async {
+    final (client, expected) = info;
+    final payments = client.payments;
+    var (payment, err) = await payments.obtain(_paymentId);
+    final old = payment.access<Card>().status.toString().split('.')[1];
+    String? status;
+
+    if( err != null ) {
+      return (false, "Bad request");
+    }
+
+    while(true) {
+      sleep(Duration(seconds: 5));
+      (payment, err) = await payments.obtain(_paymentId);
+      status = payment.access<Card>()._status.toString().split('.')[1];
+    
+      if( status != old ) {
+        break;
+      }
+    }
+
+    return (status == expected, status == expected ? null : status);
+  }
 }
 
 
@@ -217,6 +281,31 @@ class Pix implements Response {
 
   @override
   Pix access<Pix>() => this as Pix;
+
+  @override
+  Future<(bool, String?)> check((Client, String) info) async {
+    final (client, expected) = info;
+    final payments = client.payments;
+    var (payment, err) = await payments.obtain(_paymentId);
+    final old = payment.access<Pix>().status.toString().split('.')[1];
+    String? status;
+
+    if( err != null ) {
+      return (false, "Bad request");
+    }
+
+    while(true) {
+      sleep(Duration(seconds: 5));
+      (payment, err) = await payments.obtain(_paymentId);
+      status = payment.access<Pix>()._status.toString().split('.')[1];
+    
+      if( status != old ) {
+        break;
+      }
+    }
+
+    return (status == expected, status == expected ? null : status);
+  }
 }
 
 
@@ -228,4 +317,9 @@ class InvalidResp implements Response {
 
   @override
   InvalidResp access<InvalidResp>() => this as InvalidResp;
+
+  @override
+  Future<(bool, String?)> check((Client, String) info) async {
+    return (false, null);
+  }
 }
