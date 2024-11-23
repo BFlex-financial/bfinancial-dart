@@ -7,14 +7,19 @@ void main() {
       final client = Client.login("admin");
       final payments = client.payments;
 
-      final (response, err) = await payments.create(PixCreate(
+      var (response, err) = await payments.create(PixCreate(
         payerEmail: 'lucasdwbfff@gmail.com',
         payerCpf: '1245678910',
         amount: 1000.0,
       ));
 
       expect(err, null);
-      print(response.access<Pix>());
+
+      String paymentId = response.access<Pix>().paymentId;
+      (response, err) = await payments.obtain(paymentId);
+
+      expect(err, null);
+      print(response);
     });
   });
 }

@@ -22,9 +22,50 @@ class Status {
     }
     return "$type";
   }
+
+  static Status parse(String status) {
+    switch(status.toUpperCase()) {
+      case 'REJECTED' : return Status(StatusType.reject);
+      case 'CANCELLED': return Status(StatusType.cancelled);
+      case 'APPROVED' : return Status(StatusType.approved);
+      case 'REFUNDED' : return Status(StatusType.refunded);
+      case 'PENDING'  : return Status(StatusType.pending);
+    }
+    
+    return Status(StatusType.unknown);
+  }
 }
 
 sealed class Response {
+
+  static Response parse(Map<String, dynamic> data, String id) {
+    if( data.containsKey('error') ) {
+      return InvalidResp();
+    } 
+
+    switch(data['method']) {
+      case 'Pix':
+        return Pix(
+          paymentId:  id,
+
+          /* New data */
+          literal:    data['payment_info']['literal'],
+          qrCode:     data['payment_info']['qr_code'],
+          status:     Status.parse(data['status'])
+        );
+      case 'Card':
+        return Card(
+          paymentId:      id,
+
+          /* New data */
+          totalAmount:    data['payment_info']['total_amount'],
+          increase:       data['payment_info']['increase'],
+          status:         Status.parse(data['status'])
+        );
+    }
+    
+    return InvalidResp();
+  }
 
   static Response validate(String method, Map<String, dynamic> data) {
     if( data.containsKey('error') ) {
@@ -44,7 +85,7 @@ sealed class Response {
         return Card(
           totalAmount: data['total_amount'] as double,
           paymentId:   data['payment_id'] as String,
-          increse:     data['increase'] as double,
+          increase:    data['increase'] as double,
           status:      Status(StatusType.pending),
         );
     }
@@ -112,32 +153,32 @@ sealed class Response {
 class Card implements Response {
   final double _totalAmount;
   final String _paymentId;
-  final double _increse;
+  final double _increase;
   final Status _status;
 
   Card({
     required double totalAmount,
     required String paymentId,
-    required double increse,
+    required double increase,
     required Status status,
   }) : _totalAmount = totalAmount,
-       _paymentId = paymentId,
-       _increse = increse,
-       _status = status;
+       _paymentId   = paymentId,
+       _increase    = increase,
+       _status      = status;
 
   @override
   String toString() => 
       'Payment(Card) by BFlex F. Solutions {\n'
       '\t.paymentId = "$_paymentId"\n'
       '\t.status = ${_status.toString()}\n'
-      '\t.increse = $_increse\n'
+      '\t.increase = $_increase\n'
       '\t.totalAmount = $_totalAmount\n}';
 
-  String get method => "Card";
+  String get method      => "Card";
   double get totalAmount => _totalAmount;
-  String get paymentId => _paymentId;
-  double get increse => _increse;
-  Status get status => _status;
+  String get paymentId   => _paymentId;
+  double get increase    => _increase;
+  Status get status      => _status;
 
   @override
   Card access<Card>() => this as Card;
@@ -168,11 +209,11 @@ class Pix implements Response {
     '\t.literal = "$_literal"\n'
     '\t.qrCode = "$_qrCode"\n}';
 
-  String get method => "Pix";
+  String get method    => "Pix";
   String get paymentId => _paymentId;
-  String get literal => _literal;
-  String get qrCode => _qrCode;
-  Status get status => _status;
+  String get literal   => _literal;
+  String get qrCode    => _qrCode;
+  Status get status    => _status;
 
   @override
   Pix access<Pix>() => this as Pix;

@@ -143,3 +143,62 @@ void main() {
   print(response.access<Card>());
 } 
 ```
+
+### Collecting payment data
+
+```dart
+import 'package:bfinancial';
+
+void main() {
+  final client = Client.login("YOUR_API_KEY");
+  final payments = client.payments;
+
+  var (response, err) = await payments.create(PixCreate(
+    payerEmail: 'test@gmail.com',
+    payerCpf:   '12345678909',
+    amount:      1000.00,
+  ));
+
+  if( err ) {
+    print("Error returned when generating payment: $err");
+    return;
+  }
+
+  String paymentId = response.access<Pix>().paymentId;
+  (response, err) = await payments.obtain(paymentId);
+
+  if( err ) {
+    print("Error returned when generating payment: $err");
+    return;
+  }
+
+  print(response.access<Pix>().paymentId);
+}
+```
+
+Or, if you don't know the exact type of payment you're dealing with, you can use:
+
+```dart
+import 'package:bfinancial';
+
+void main() {
+  final client = Client.login("YOUR_API_KEY");
+  final payments = client.payments;
+
+  final (response, err) = await payments.obtain("PAYMENT_ID");
+
+  if( err ) {
+    print("Error returned when generating payment: $err");
+    return;
+  }
+
+  // To avoid casting for a type that the pay doesn't match
+  if( response is Pix ) {
+    // ...
+    print(response.access<Pix>());
+  } else if( response is Card ) {
+    // ...
+    print(response.access<Card>()); 
+  }
+
+}

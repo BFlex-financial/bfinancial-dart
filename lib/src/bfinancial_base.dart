@@ -70,25 +70,87 @@ class Payments {
       final payload = data.payload();
 
       final url = Uri.parse('$_api/payment/create');
-      final brute = await http.post(
-        url,
-        headers: {
+      final request = http.Request('POST', url)..headers.addAll({
           'Content-type': 'application/json',
           'Authorization-key': _auth
         },
-        body: json.encode(payload)
-      );
+      )
+      ..body = json.encode(payload);
 
-      final response = json.decode(brute.body);
-      final rData = response['data'] as Map<String, dynamic>;
+      final response = await request.send();
+      final content = await response.stream.bytesToString();
+      final contentJson = json.decode(content);
+      final received = contentJson['data'] as Map<String, dynamic>;
 
-      if( rData.containsKey('error') ) {
-        error = rData['error'];
+      if( received.containsKey('error') ) {
+        error = received['error'];
       } 
 
-      ok = Response.validate(method, rData);
+      ok = Response.validate(method, received);
 
     } catch (_) {
+      return (ok, 'Failed request');
+    }
+
+    return (ok, error);
+  }
+
+  /// # Get payment information
+  /// 
+  /// To collect payment data, you need to use the `obtain` function.
+  /// 
+  /// This way, we can collect all the information necessary for your system to work.
+  /// 
+  /// ## You can:
+  /// 
+  /// - Collect the payment qrCode again
+  /// - Collect the transaction status
+  /// - Collect the cause of the failure (if it fails)
+  /// - _Among other data..._
+  /// 
+  /// # Exemple
+  /// 
+  /// ```dart
+  /// // Create the payment
+  /// final (response, err) = await payments.create(PixCreate( ... ));
+  /// 
+  /// // Ensures that there are no errors when creating the payment
+  /// if( err != null ) {
+  ///   print("Error returned when generating payment: $err");
+  /// }
+  /// 
+  /// // Collects PIX (casted)
+  /// final pix = response.access<Pix>();
+  /// 
+  /// // Collects and prints payment data
+  /// final info = await payments.obtain(pix.paymentId);
+  /// print(info);
+  /// 
+  /// ```
+  Future<(Response, String?)> obtain(String id) async {
+    String? error;
+    Response ok = InvalidResp();
+
+    try {
+
+      final url = Uri.parse('$_api/payment/get/$id');
+      final request = http.Request('GET', url)..headers.addAll({
+        'Content-type': 'application/json',
+        'Authorization-key': _auth
+      });
+
+      final response = await request.send();
+      final content = await response.stream.bytesToString();
+      final contentJson = json.decode(content);
+      final data = contentJson['data'] as Map<String, dynamic>;
+
+      if( data.containsKey('error') ) {
+        error = data['error'];
+      } 
+
+      ok = Response.parse(data, id);
+
+    } catch(_) {
       return (ok, 'Failed request');
     }
 
