@@ -24,7 +24,6 @@ void main() {
 
       String paymentId = response.access<Pix>().paymentId;
       (response, err) = await payments.obtain(paymentId);
-      print(response);
 
       expect(err, null);
 

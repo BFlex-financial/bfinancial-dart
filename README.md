@@ -10,6 +10,8 @@
 
 <br>
 <div align="center">
+
+  `Documentação` | `Documentation` | `Documentación`
   <h4>
     <a href="./DOCS-PT.md">Português</a> | 
     <a href="./DOCS-EN.md">English</a> | 
